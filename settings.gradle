@@ -1,2 +1,0 @@
-include ':app', ':clickableareasimage'
-rootProject.name='Railway Station'
