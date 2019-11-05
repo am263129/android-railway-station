@@ -1,8 +1,16 @@
 package at.lukle.clickableareas;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -20,25 +28,30 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
     private final String TAG = getClass().getSimpleName();
     PhotoViewAttacher photoViewAttacher;
+    Bitmap myBitmap;
+    ImageView map,position;
+    Bitmap tempBitmap;
+    Canvas tempCanvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Add image
-        ImageView image = (ImageView) findViewById(R.id.imageView);
-        image.setImageResource(R.drawable.high_resolution_map);
-
-        // Create your image
-
-        photoViewAttacher = new PhotoViewAttacher(image);
+        map = (ImageView) findViewById(R.id.imageView);
+        map.setImageResource(R.drawable.high_resolution_map);
+        position = (ImageView)findViewById(R.id.img_position);
+        photoViewAttacher = new PhotoViewAttacher(map);
         photoViewAttacher.setMinimumScale(1.3f);
         photoViewAttacher.setScale(2.5f, 592.9f, 405.9f, true);
-        // Define your clickable area (pixel values: x coordinate, y coordinate, width, height) and assign an object to it
+
         ClickableAreasImage clickableAreasImage = new ClickableAreasImage(photoViewAttacher, this);
         List<ClickableArea> clickableAreas = getClickableAreas();
         clickableAreasImage.setClickableAreas(clickableAreas);
+
+        myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.high_resolution_map);
+        tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
+        tempCanvas = new Canvas(tempBitmap);
     }
 
     // Listen for touches on your images:
@@ -47,6 +60,18 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         if (item instanceof State) {
             String text = ((State) item).getName();
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+//
+//            tempCanvas.drawBitmap(myBitmap, 0, 0, null);
+//
+//            Paint paint;
+//            paint = new Paint();
+//            paint.setColor(Color.RED);
+//            paint.setStyle(Paint.Style.FILL);
+//            tempCanvas.drawCircle(76, 345, 20, paint);
+//
+//
+////Attach the canvas to the ImageView
+//            map.setImageResource(new BitmapDrawable(getResources(), tempBitmap));
         }
     }
 
@@ -100,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         clickableAreas.add(new ClickableArea(317, 562, 10, 10, new State("G-3")));
         clickableAreas.add(new ClickableArea(346, 532, 10, 10, new State("G-4")));
         clickableAreas.add(new ClickableArea(378, 501, 10, 10, new State("G-5")));
-        
+
         clickableAreas.add(new ClickableArea(342, 262, 10, 10, new State("R-1")));
         clickableAreas.add(new ClickableArea(357, 216, 10, 10, new State("R-2")));
         clickableAreas.add(new ClickableArea(384, 179, 10, 10, new State("R-3")));
