@@ -1,4 +1,4 @@
-package at.lukle.clickableareas;
+package at.lukle.rs_map;
 
 import android.app.Application;
 

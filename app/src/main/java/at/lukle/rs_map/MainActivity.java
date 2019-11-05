@@ -1,18 +1,17 @@
-package at.lukle.clickableareas;
+package at.lukle.rs_map;
 
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     ImageView map,position;
     Bitmap tempBitmap;
     Canvas tempCanvas;
-
+    Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +51,17 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.high_resolution_map);
         tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
         tempCanvas = new Canvas(tempBitmap);
+
+
+        dialog = new Dialog(this);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        dialog.setContentView(R.layout.popup_dialog);
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.BOTTOM;
+        lp.windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setAttributes(lp);
     }
 
     // Listen for touches on your images:
@@ -60,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         if (item instanceof State) {
             String text = ((State) item).getName();
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+            showPOPupDialog();
 //
 //            tempCanvas.drawBitmap(myBitmap, 0, 0, null);
 //
@@ -73,6 +84,24 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 ////Attach the canvas to the ImageView
 //            map.setImageResource(new BitmapDrawable(getResources(), tempBitmap));
         }
+    }
+
+    private void showPOPupDialog() {
+//        Dialog dialog = new Dialog(new ContextThemeWrapper(this, R.style.DialogSlideAnim));
+//        dialog.setContentView(R.layout.popup_dialog);
+//        getWindow().setGravity(Gravity.BOTTOM);
+//        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        dialog.show();
+        Dialog dialog = new Dialog(this);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        dialog.setContentView(R.layout.popup_dialog);
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.BOTTOM;
+        lp.windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
     }
 
     @NonNull

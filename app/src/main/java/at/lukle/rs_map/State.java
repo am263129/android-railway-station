@@ -1,4 +1,4 @@
-package at.lukle.clickableareas;
+package at.lukle.rs_map;
 
 /**
  * Created by Lukas on 10/24/2015.
