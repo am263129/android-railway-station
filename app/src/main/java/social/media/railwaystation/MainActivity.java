@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 
         PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(myImageView);
-        myImageView.setOnTouchListener(handleTouch);
+//        myImageView.setOnTouchListener(handleTouch);
         photoViewAttacher.setMinimumScale(1.5f);
         photoViewAttacher.setScale(1.9f, 592.9f, 405.9f, true);
 //        photoViewAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
