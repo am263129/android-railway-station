@@ -1,10 +1,10 @@
 package social.media.railwaystation;
 
-public class Station {
+public class State {
 
     private String name;
 
-    public Station(String name) {
+    public State(String name) {
         this.name = name;
     }
 
