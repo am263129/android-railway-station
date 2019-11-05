@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@android:color/transparent</color>
+    <color name="colorPrimaryDark">@android:color/transparent</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="austriaRed">#ff0000</color>
+    <color name="colorText_a">#C11D00</color>
+
+</resources>
