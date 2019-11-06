@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +13,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         dialog.show();
     }
 
-    @NonNull
+
     private List<ClickableArea> getClickableAreas() {
 
         List<ClickableArea> clickableAreas = new ArrayList<>();
