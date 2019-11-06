@@ -22,6 +22,7 @@ import java.util.List;
 import at.lukle.clickableareasimage.ClickableArea;
 import at.lukle.clickableareasimage.ClickableAreasImage;
 import at.lukle.clickableareasimage.OnClickableAreaClickedListener;
+import at.lukle.rs_map.station_info.MapsActivity;
 import at.lukle.rs_map.station_info.info_viewActivity;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
                 startActivity(intent);
                 break;
             case R.id.btn_route:
-                intent = new Intent(MainActivity.this,mapViewActivity.class);
+                intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_tourist:
