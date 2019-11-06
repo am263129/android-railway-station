@@ -14,7 +14,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
     <ImageView
         android:id="@+id/img_position"
@@ -22,5 +23,23 @@
         android:layout_height="30dp"
         android:visibility="gone"
         app:srcCompat="@drawable/gif_a" />
+
+    <gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
+        android:id="@+id/SearchableSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_horizontal"
+        app:BoarderColor="@android:color/holo_orange_dark"
+        app:BordersSize="1dp"
+        app:DoneSearchTintColor="@android:color/white"
+        app:RevealEmptyText=" Click here to search"
+        app:RevealViewBackgroundColor="@color/transparent"
+        app:SearchViewBackgroundColor="@android:color/holo_blue_light"
+        app:ShowBorders="true"
+        app:SpinnerExpandHeight="0dp"
+        app:StartSearchTintColor="@android:color/white" />
 
 </RelativeLayout>

@@ -1,12 +1,17 @@
 package at.lukle.rs_map;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -27,9 +32,12 @@ import javax.microedition.khronos.opengles.GL;
 import at.lukle.clickableareasimage.ClickableArea;
 import at.lukle.clickableareasimage.ClickableAreasImage;
 import at.lukle.clickableareasimage.OnClickableAreaClickedListener;
+import at.lukle.rs_map.searchspinner.SimpleArrayListAdapter;
 import at.lukle.rs_map.station_info.MapsActivity;
 import at.lukle.rs_map.station_info.info_viewActivity;
 import at.lukle.rs_map.util.Global;
+import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
+import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity implements OnClickableAreaClickedListener,  View.OnClickListener {
@@ -41,18 +49,28 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     Bitmap tempBitmap;
     Canvas tempCanvas;
     Dialog dialog;
+    private SearchableSpinner mSearchableSpinner;
+    private SimpleArrayListAdapter mSimpleArrayListAdapter;
+    private final ArrayList<String> mStrings = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         init_data();
+        init_arrayAdapter();
         map = (ImageView) findViewById(R.id.imageView);
         map.setImageResource(R.drawable.high_resolution_map);
         position = (ImageView)findViewById(R.id.img_position);
+        mSearchableSpinner = (SearchableSpinner) findViewById(R.id.SearchableSpinner);
+        mSimpleArrayListAdapter = new SimpleArrayListAdapter(this, mStrings);
+        mSearchableSpinner.setAdapter(mSimpleArrayListAdapter);
+        mSearchableSpinner.setOnItemSelectedListener(mOnItemSelectedListener);
+
         photoViewAttacher = new PhotoViewAttacher(map);
         photoViewAttacher.setMinimumScale(1.3f);
-        photoViewAttacher.setScale(2.5f, 592.9f, 405.9f, true);
+        photoViewAttacher.setMaximumScale(3.0f);
+        photoViewAttacher.setScale(2.0f, 592.9f, 405.9f, true);
 
         ClickableAreasImage clickableAreasImage = new ClickableAreasImage(photoViewAttacher, this);
         List<ClickableArea> clickableAreas = getClickableAreas();
@@ -68,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 
 
+
     // Listen for touches on your images:
     @Override
     public void onClickableAreaTouched(Object item) {
@@ -78,20 +97,17 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 //            Log.e("Time","milestone2");
             showPOPupDialog((State) item);
+
 //            Log.e("Time","milestone3");
 //
-//            tempCanvas.drawBitmap(myBitmap, 0, 0, null);
-//
-//            Paint paint;
-//            paint = new Paint();
-//            paint.setColor(Color.RED);
-//            paint.setStyle(Paint.Style.FILL);
-//            tempCanvas.drawCircle(76, 345, 20, paint);
-//
-//
-////Attach the canvas to the ImageView
-//            map.setImageResource(new BitmapDrawable(getResources(), tempBitmap));
+
         }
+    }
+    public static float convertPixelsToDp(float px, Context context){
+        return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     private void showPOPupDialog(State item) {
@@ -110,6 +126,20 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 //        lp.gravity = Gravity.BOTTOM;
 //        lp.windowAnimations = R.style.DialogAnimation;
 //        dialog.getWindow().setAttributes(lp);
+        tempCanvas.drawBitmap(myBitmap, 0, 0, null);
+
+        Paint paint;
+        paint = new Paint();
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        tempCanvas.drawCircle(convertDpToPixel(((State) item).getCenter_X(),this), convertDpToPixel(((State) item).getCenter_Y(),this), 50, paint);
+
+//
+////Attach the canvas to the ImageView
+        map.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+
+
+        photoViewAttacher.setScale(photoViewAttacher.getScale(),((State) item).getCenter_X(),((State) item).getCenter_Y(),false);
         Log.e("Time","milestone4");
         dialog = new Dialog(this);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -237,6 +267,23 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         Global.array_state.add(new State( "Østerport"             , 620,220	,633,225  ,    "M3,M4"));
 
     }
+    private void init_arrayAdapter() {
+        for(int i = 0; i < Global.array_state.size(); i ++){
+            mStrings.add(Global.array_state.get(i).getName());
+        }
+    }
+
+    private OnItemSelectedListener mOnItemSelectedListener = new OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(View view, int position, long id) {
+            showPOPupDialog(Global.array_state.get(position));
+        }
+
+        @Override
+        public void onNothingSelected() {
+            Toast.makeText(MainActivity.this, "Nothing Selected", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

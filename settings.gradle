@@ -1,1 +1,2 @@
-include ':app', ':clickableareasimage'
+include ':app', ':clickableareasimage', ':searchablespinner_'
+project(':searchablespinner_').projectDir = new File('searchablespinner')
