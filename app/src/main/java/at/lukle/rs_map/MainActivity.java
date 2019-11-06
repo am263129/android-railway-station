@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,21 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         tempCanvas = new Canvas(tempBitmap);
 
 
-        dialog = new Dialog(this);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        dialog.setContentView(R.layout.popup_dialog);
-        ImageView btn_food = (ImageView)dialog.findViewById(R.id.btn_food);
-        ImageView btn_tourist = (ImageView)dialog.findViewById(R.id.btn_tourist);
-        ImageView btn_route = (ImageView)dialog.findViewById(R.id.btn_route);
-        btn_food.setOnClickListener(this);
-        btn_tourist.setOnClickListener(this);
-        btn_route.setOnClickListener(this);
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.BOTTOM;
-        lp.windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setAttributes(lp);
+
     }
 
 
@@ -84,12 +72,13 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     @Override
     public void onClickableAreaTouched(Object item) {
         if (item instanceof State) {
-            Log.e("Time","milestone1");
+//            Log.e("Time","milestone1");
             String text = ((State) item).getName();
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-            Log.e("Time","milestone2");
-            showPOPupDialog();
-            Log.e("Time","milestone3");
+
+//            Log.e("Time","milestone2");
+            showPOPupDialog((State) item);
+//            Log.e("Time","milestone3");
 //
 //            tempCanvas.drawBitmap(myBitmap, 0, 0, null);
 //
@@ -105,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         }
     }
 
-    private void showPOPupDialog() {
+    private void showPOPupDialog(State item) {
 //        Dialog dialog = new Dialog(new ContextThemeWrapper(this, R.style.DialogSlideAnim));
 //        dialog.setContentView(R.layout.popup_dialog);
 //        getWindow().setGravity(Gravity.BOTTOM);
@@ -121,6 +110,70 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 //        lp.gravity = Gravity.BOTTOM;
 //        lp.windowAnimations = R.style.DialogAnimation;
 //        dialog.getWindow().setAttributes(lp);
+        Log.e("Time","milestone4");
+        dialog = new Dialog(this);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        dialog.setContentView(R.layout.popup_dialog);
+        ImageView btn_food = (ImageView)dialog.findViewById(R.id.btn_food);
+        ImageView btn_tourist = (ImageView)dialog.findViewById(R.id.btn_tourist);
+        ImageView btn_route = (ImageView)dialog.findViewById(R.id.btn_route);
+        btn_food.setOnClickListener(this);
+        btn_tourist.setOnClickListener(this);
+        btn_route.setOnClickListener(this);
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.BOTTOM;
+        lp.windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setAttributes(lp);
+
+        LinearLayout train_2 = (LinearLayout)dialog.findViewById(R.id.train_2);
+        ImageView train_name_1 = (ImageView)dialog.findViewById(R.id.tr_name_1);
+        ImageView train_name_2 = (ImageView)dialog.findViewById(R.id.tr_name_2);
+        ImageView time_1_1 = (ImageView)dialog.findViewById(R.id.time_1_1);
+        ImageView time_1_2 = (ImageView)dialog.findViewById(R.id.time_1_2);
+        ImageView time_2_1 = (ImageView)dialog.findViewById(R.id.time_2_1);
+        switch (item.getTrainName()){
+            case "M1":
+                train_name_1.setImageResource(R.drawable.m1);
+                time_1_1.setImageResource(R.drawable.m1_6min);
+                break;
+            case "M2":
+                train_name_1.setImageResource(R.drawable.m2);
+                time_1_1.setImageResource(R.drawable.m2_6min);
+                break;
+            case "M3":
+                train_name_1.setImageResource(R.drawable.m3);
+                time_1_1.setImageResource(R.drawable.m3_4min);
+                break;
+            case "M4":
+                train_name_1.setImageResource(R.drawable.m4);
+                time_1_1.setImageResource(R.drawable.m4_2min);
+                break;
+            case "M1,M2":
+                train_name_1.setImageResource(R.drawable.m1_m2);
+                time_1_1.setImageResource(R.drawable.m1_3min);
+                time_1_2.setVisibility(View.VISIBLE);
+                time_1_2.setImageResource(R.drawable.m2_3min);
+                break;
+            case "M3,M4":
+                train_name_1.setImageResource(R.drawable.m3_m4);
+                time_1_2.setVisibility(View.VISIBLE);
+                time_1_1.setImageResource(R.drawable.m3_4min);
+                time_1_2.setImageResource(R.drawable.m4_2min);
+                break;
+            case "M1,M2,M3":
+                train_2.setVisibility(View.VISIBLE);
+                train_name_1.setImageResource(R.drawable.m1_m2);
+                train_name_2.setImageResource(R.drawable.m3);
+                time_1_2.setVisibility(View.VISIBLE);
+                time_1_1.setImageResource(R.drawable.m1_3min);
+                time_1_2.setImageResource(R.drawable.m2_3min);
+                time_2_1.setImageResource(R.drawable.m3_4min);
+                break;
+
+        }
+        Log.e("Time","milestone5");
         dialog.show();
     }
 
@@ -137,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     }
 
     private void init_data() {
+
         Global.array_state.add(new State( "Aksel Møllers Have"    , 340,260   ,345,265  ,    "M3"));
         Global.array_state.add(new State( "Amagerbro"             , 700,400	,707,409  ,    "M2"));
         Global.array_state.add(new State( "Amager Strand"         , 790,490	,795,497  ,    "M2"));
@@ -181,8 +235,6 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         Global.array_state.add(new State( "Ørestad"               , 660,620	,662,624  ,    "M1"));
         Global.array_state.add(new State( "Øresund"               , 760,460	,166,467  ,    "M2"));
         Global.array_state.add(new State( "Østerport"             , 620,220	,633,225  ,    "M3,M4"));
-
-
 
     }
 

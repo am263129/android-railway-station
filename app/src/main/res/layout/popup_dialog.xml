@@ -19,13 +19,14 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/train_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/imageView10"
+                    android:id="@+id/tr_name_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -39,28 +40,31 @@
                     app:srcCompat="@drawable/ic_bothdirection" />
 
                 <ImageView
-                    android:id="@+id/imageView13"
+                    android:id="@+id/time_1_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     app:srcCompat="@drawable/m1_3min" />
 
                 <ImageView
-                    android:id="@+id/imageView12"
+                    android:id="@+id/time_1_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:visibility="invisible"
                     app:srcCompat="@drawable/m2_3min" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/train_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <ImageView
-                    android:id="@+id/imageView14"
+                    android:id="@+id/tr_name_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -71,10 +75,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    app:srcCompat="@drawable/ic_onearrow" />
+                    app:srcCompat="@drawable/ic_bothdirection" />
 
                 <ImageView
-                    android:id="@+id/imageView16"
+                    android:id="@+id/time_2_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
