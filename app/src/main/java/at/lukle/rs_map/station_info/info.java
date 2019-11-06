@@ -1,7 +1,7 @@
 package at.lukle.rs_map.station_info;
 
 public class info {
-    public String Info_pic;
+    public Integer Info_pic;
     public String Info_name;
     public String Info_distance;
     public String Info_description;
@@ -10,7 +10,9 @@ public class info {
 
     }
 
-    public void info(String info_name, String info_pic, String info_distance, String info_description ){
+
+
+    public info(String  info_name, Integer info_pic, String info_distance, String info_description ){
         this.Info_name = info_name;
         this.Info_pic = info_pic;
         this.Info_distance = info_distance;
@@ -29,7 +31,7 @@ public class info {
         return Info_name;
     }
 
-    public String getInfo_pic() {
+    public Integer getInfo_pic() {
         return Info_pic;
     }
 }

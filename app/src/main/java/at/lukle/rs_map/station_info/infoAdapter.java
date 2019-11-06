@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,10 +43,19 @@ public class infoAdapter extends ArrayAdapter<info> {
         TextView info_name = (TextView)v.findViewById(R.id.info_name);
         TextView info_distance = (TextView)v.findViewById(R.id.info_distance);
         TextView info_description = (TextView)v.findViewById(R.id.link_description);
+        final TextView desctiption = (TextView)v.findViewById(R.id.info_description);
 
         info_name.setText(array_info.get(position).getInfo_name());
         info_distance.setText(array_info.get(position).getInfo_distance());
-        info_pic.setImageBitmap(setPhoto(array_info.get(position).getInfo_pic()));
+        Integer index = array_info.get(position).getInfo_pic();
+        info_pic.setImageResource(index);
+        desctiption.setText(array_info.get(position).getInfo_description());
+        info_description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                desctiption.setVisibility(View.VISIBLE);
+            }
+        });
 
         return v;
     }

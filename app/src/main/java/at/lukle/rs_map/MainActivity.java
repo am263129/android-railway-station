@@ -1,5 +1,6 @@
 package at.lukle.rs_map;
 
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     Bitmap tempBitmap;
     Canvas tempCanvas;
     Dialog dialog;
+    String selected_station;
+
     private SearchableSpinner mSearchableSpinner;
     private SimpleArrayListAdapter mSimpleArrayListAdapter;
     private final ArrayList<String> mStrings = new ArrayList<>();
@@ -92,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     public void onClickableAreaTouched(Object item) {
         if (item instanceof State) {
 //            Log.e("Time","milestone1");
-            String text = ((State) item).getName();
-            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+            selected_station = ((State) item).getName();
+//            Toast.makeText(this, selected_station, Toast.LENGTH_SHORT).show();
 
 //            Log.e("Time","milestone2");
             showPOPupDialog((State) item);
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
-    private void showPOPupDialog(State item) {
+    private void showPOPupDialog(final State  item) {
 //        Dialog dialog = new Dialog(new ContextThemeWrapper(this, R.style.DialogSlideAnim));
 //        dialog.setContentView(R.layout.popup_dialog);
 //        getWindow().setGravity(Gravity.BOTTOM);
@@ -126,17 +129,33 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 //        lp.gravity = Gravity.BOTTOM;
 //        lp.windowAnimations = R.style.DialogAnimation;
 //        dialog.getWindow().setAttributes(lp);
-        tempCanvas.drawBitmap(myBitmap, 0, 0, null);
 
-        Paint paint;
-        paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        tempCanvas.drawCircle(convertDpToPixel(((State) item).getCenter_X(),this), convertDpToPixel(((State) item).getCenter_Y(),this), 50, paint);
 
+        ValueAnimator animator = ValueAnimator.ofInt(0, 120);
+        animator.setDuration(2000);
+        animator.setRepeatCount(10);
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                if (value > 60)
+                    value = 120-value;
+                Float radius = Float.parseFloat(String.valueOf(value));
+                tempCanvas.drawBitmap(myBitmap, 0, 0, null);
+                final Paint paint;
+                paint = new Paint();
+                paint.setColor(Color.GREEN);
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(5);
+                tempCanvas.drawCircle(convertDpToPixel(((State) item).getCenter_X(),MainActivity.this), convertDpToPixel(((State) item).getCenter_Y(),MainActivity.this), radius, paint);
+                map.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+            }
+        });
+        animator.start();
 //
 ////Attach the canvas to the ImageView
-        map.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+
 
 
         photoViewAttacher.setScale(photoViewAttacher.getScale(),((State) item).getCenter_X(),((State) item).getCenter_Y(),false);
@@ -304,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         switch (v.getId()){
             case R.id.btn_food:
                 intent.putExtra("TYPE","Food");
+                intent.putExtra("NAME",selected_station);
                 startActivity(intent);
                 break;
             case R.id.btn_route:
@@ -312,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
                 break;
             case R.id.btn_tourist:
                 intent.putExtra("TYPE","Tourist");
+                intent.putExtra("NAME",selected_station);
                 startActivity(intent);
                 break;
         }
