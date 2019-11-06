@@ -89,7 +89,7 @@ public class info_viewActivity extends AppCompatActivity implements View.OnClick
         final int min = 0;
         final int max = 4;
         final int random_count = new Random().nextInt((max - min) + 1) + min+1;
-        final int init_index =  R.drawable.ico_go;
+        final int init_index =  R.drawable.ico_go_pressed;
         ArrayList<Integer> list_random_image = new ArrayList<Integer>();
         ArrayList<Integer> list_random_name = new ArrayList<Integer>();
         ArrayList<Integer> list_random_description = new ArrayList<Integer>();

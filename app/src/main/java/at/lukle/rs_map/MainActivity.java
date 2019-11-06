@@ -114,6 +114,10 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     }
 
     private void showPOPupDialog(final State  item) {
+        try{dialog.dismiss();}
+        catch (Exception E){
+            Log.e("Error","No Dialog");
+        }
 //        Dialog dialog = new Dialog(new ContextThemeWrapper(this, R.style.DialogSlideAnim));
 //        dialog.setContentView(R.layout.popup_dialog);
 //        getWindow().setGravity(Gravity.BOTTOM);
