@@ -54,12 +54,11 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
     private SearchableSpinner mSearchableSpinner;
     private SimpleArrayListAdapter mSimpleArrayListAdapter;
-    private final ArrayList<String> mStrings = new ArrayList<>();
+    private ArrayList<String> mStrings =  new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init_data();
         init_arrayAdapter();
         map = (ImageView) findViewById(R.id.imageView);
@@ -86,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 
     }
-
-
 
 
     // Listen for touches on your images:
@@ -243,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     }
 
     private void init_data() {
-
+        Global.array_state.clear();
         Global.array_state.add(new State( "Aksel Møllers Have"    , 340,260   ,345,265  ,    "M3"));
         Global.array_state.add(new State( "Amagerbro"             , 700,400	,707,409  ,    "M2"));
         Global.array_state.add(new State( "Amager Strand"         , 790,490	,795,497  ,    "M2"));
@@ -299,7 +296,13 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     private OnItemSelectedListener mOnItemSelectedListener = new OnItemSelectedListener() {
         @Override
         public void onItemSelected(View view, int position, long id) {
-            showPOPupDialog(Global.array_state.get(position));
+
+                for(int i = 0; i< Global.array_state.size();i++) {
+                    if (Global.array_state.get(i).getName().equals(mSimpleArrayListAdapter.getItem(position))){
+                        showPOPupDialog(Global.array_state.get(i));
+                        break;
+                    }
+                }
         }
 
         @Override
@@ -341,4 +344,5 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
                 break;
         }
     }
+
 }
