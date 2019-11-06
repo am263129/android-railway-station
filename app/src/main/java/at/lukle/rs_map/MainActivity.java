@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +20,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.microedition.khronos.opengles.GL;
+
 import at.lukle.clickableareasimage.ClickableArea;
 import at.lukle.clickableareasimage.ClickableAreasImage;
 import at.lukle.clickableareasimage.OnClickableAreaClickedListener;
 import at.lukle.rs_map.station_info.MapsActivity;
 import at.lukle.rs_map.station_info.info_viewActivity;
+import at.lukle.rs_map.util.Global;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MainActivity extends AppCompatActivity implements OnClickableAreaClickedListener,  View.OnClickListener {
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init_data();
         map = (ImageView) findViewById(R.id.imageView);
         map.setImageResource(R.drawable.high_resolution_map);
         position = (ImageView)findViewById(R.id.img_position);
@@ -73,13 +78,18 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         dialog.getWindow().setAttributes(lp);
     }
 
+
+
     // Listen for touches on your images:
     @Override
     public void onClickableAreaTouched(Object item) {
         if (item instanceof State) {
+            Log.e("Time","milestone1");
             String text = ((State) item).getName();
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+            Log.e("Time","milestone2");
             showPOPupDialog();
+            Log.e("Time","milestone3");
 //
 //            tempCanvas.drawBitmap(myBitmap, 0, 0, null);
 //
@@ -119,68 +129,61 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
         List<ClickableArea> clickableAreas = new ArrayList<>();
 
-        clickableAreas.add(new ClickableArea(76, 345, 10, 10, new State("G-1")));
-        clickableAreas.add(new ClickableArea(136, 345, 10, 10, new State("G-2")));
-        clickableAreas.add(new ClickableArea(198, 345, 10, 10, new State("G-3")));
-        clickableAreas.add(new ClickableArea(258, 345, 10, 10, new State("G-4")));
-        clickableAreas.add(new ClickableArea(446, 345, 10, 10, new State("G-5")));
-        clickableAreas.add(new ClickableArea(534, 345, 10, 10, new State("G-6")));
-        clickableAreas.add(new ClickableArea(660, 384, 10, 10, new State("G-7")));
-        clickableAreas.add(new ClickableArea(660, 453, 10, 10, new State("G-8")));
-        clickableAreas.add(new ClickableArea(660, 495, 10, 10, new State("G-9")));
-        clickableAreas.add(new ClickableArea(660, 537, 10, 10, new State("G-10")));
-        clickableAreas.add(new ClickableArea(660, 578, 10, 10, new State("G-11")));
-        clickableAreas.add(new ClickableArea(660, 621, 10, 10, new State("G-12")));
-        clickableAreas.add(new ClickableArea(660, 663, 10, 10, new State("G-13")));
 
-        clickableAreas.add(new ClickableArea(334, 321, 40, 40, new State("W-1")));
-        clickableAreas.add(new ClickableArea(607, 321, 55, 55, new State("W-2")));
-
-        clickableAreas.add(new ClickableArea(76, 327, 10, 10, new State("Y-1")));
-        clickableAreas.add(new ClickableArea(136, 327, 10, 10, new State("Y-2")));
-        clickableAreas.add(new ClickableArea(198, 327, 10, 10, new State("Y-3")));
-        clickableAreas.add(new ClickableArea(258, 327, 10, 10, new State("Y-4")));
-        clickableAreas.add(new ClickableArea(446, 327, 10, 10, new State("Y-5")));
-        clickableAreas.add(new ClickableArea(534, 327, 10, 10, new State("Y-6")));
-        clickableAreas.add(new ClickableArea(674, 375, 10, 10, new State("Y-7")));
-        clickableAreas.add(new ClickableArea(703, 405, 10, 10, new State("Y-8")));
-        clickableAreas.add(new ClickableArea(733, 435, 10, 10, new State("Y-9")));
-        clickableAreas.add(new ClickableArea(762, 464, 10, 10, new State("Y-10")));
-        clickableAreas.add(new ClickableArea(792, 493, 10, 10, new State("Y-11")));
-        clickableAreas.add(new ClickableArea(821, 523, 10, 10, new State("Y-12")));
-        clickableAreas.add(new ClickableArea(850, 552, 10, 10, new State("Y-13")));
-        clickableAreas.add(new ClickableArea(880, 582, 10, 10, new State("Y-14")));
-
-        clickableAreas.add(new ClickableArea(763, 61, 10, 10, new State("B-1")));
-        clickableAreas.add(new ClickableArea(734, 91, 10, 10, new State("B-2")));
-        clickableAreas.add(new ClickableArea(637, 218, 10, 10, new State("B-3")));
-        clickableAreas.add(new ClickableArea(650, 269, 10, 10, new State("B-4")));
-        clickableAreas.add(new ClickableArea(576, 421, 10, 10, new State("B-5")));
-        clickableAreas.add(new ClickableArea(523, 443, 10, 10, new State("B-6")));
-        clickableAreas.add(new ClickableArea(464, 446, 10, 10, new State("B-7")));
-
-        clickableAreas.add(new ClickableArea(259, 621, 10, 10, new State("G-1")));
-        clickableAreas.add(new ClickableArea(288, 592, 10, 10, new State("G-2")));
-        clickableAreas.add(new ClickableArea(317, 562, 10, 10, new State("G-3")));
-        clickableAreas.add(new ClickableArea(346, 532, 10, 10, new State("G-4")));
-        clickableAreas.add(new ClickableArea(378, 501, 10, 10, new State("G-5")));
-
-        clickableAreas.add(new ClickableArea(342, 262, 10, 10, new State("R-1")));
-        clickableAreas.add(new ClickableArea(357, 216, 10, 10, new State("R-2")));
-        clickableAreas.add(new ClickableArea(384, 179, 10, 10, new State("R-3")));
-        clickableAreas.add(new ClickableArea(424, 151, 10, 10, new State("R-4")));
-        clickableAreas.add(new ClickableArea(468, 138, 10, 10, new State("R-5")));
-        clickableAreas.add(new ClickableArea(515, 139, 10, 10, new State("R-6")));
-        clickableAreas.add(new ClickableArea(560, 155, 10, 10, new State("R-7")));
-        clickableAreas.add(new ClickableArea(596, 184, 10, 10, new State("R-8")));
-        clickableAreas.add(new ClickableArea(621, 224, 10, 10, new State("R-9")));
-        clickableAreas.add(new ClickableArea(634, 270, 10, 10, new State("R-10")));
-        clickableAreas.add(new ClickableArea(568, 406, 10, 10, new State("R-11")));
-        clickableAreas.add(new ClickableArea(519, 428, 10, 10, new State("R-12")));
-        clickableAreas.add(new ClickableArea(467, 429, 10, 10, new State("R-13")));
-        clickableAreas.add(new ClickableArea(417, 412, 10, 10, new State("R-14")));
-        clickableAreas.add(new ClickableArea(375, 380, 10, 10, new State("R-15")));
+        for (int i = 0; i < Global.array_state.size(); i ++){
+            clickableAreas.add(new ClickableArea(Global.array_state.get(i).getArea_X(), Global.array_state.get(i).getArea_Y(), 30, 30, Global.array_state.get(i)));
+        }
         return clickableAreas;
+    }
+
+    private void init_data() {
+        Global.array_state.add(new State( "Aksel Møllers Have"    , 340,260   ,345,265  ,    "M3"));
+        Global.array_state.add(new State( "Amagerbro"             , 700,400	,707,409  ,    "M2"));
+        Global.array_state.add(new State( "Amager Strand"         , 790,490	,795,497  ,    "M2"));
+        Global.array_state.add(new State( "Bella Center"          , 660,570	,663,582  ,    "M1"));
+        Global.array_state.add(new State( "Christianshavn"        , 670,370	,670,383  ,    "M1,M2"));
+        Global.array_state.add(new State( "DR Byen"               , 660,490	,663,498  ,    "M1"));
+        Global.array_state.add(new State( "Enghave Plads"         , 410,410	,420,416  ,    "M3"));
+        Global.array_state.add(new State( "Enghave Brygge (G)"    , 340,530	,350,536  ,    "M4"));
+        Global.array_state.add(new State( "Fasanvej"              , 250,320	,261,339  ,    "M1,M2"));
+        Global.array_state.add(new State( "Flintholm"             , 130,320	,140,339  ,    "M1,M2"));
+        Global.array_state.add(new State( "Femøren"               , 820,520	,824,526  ,    "M2"));
+        Global.array_state.add(new State( "Forum"                 , 440,320	,448,339  ,    "M1,M2"));
+        Global.array_state.add(new State( "Frederiksberg"         , 330,320	,353,339  ,    "M1,M2,M3"));
+        Global.array_state.add(new State( "Frederiksberg Allé"    , 370,380	,379,383  ,    "M3"));
+        Global.array_state.add(new State( "Gammel Strand"         , 560,400	,575,417  ,    "M3,M4"));
+        Global.array_state.add(new State( "Havneholmen (G)"       , 370,500	,381,506  ,    "M4"));
+        Global.array_state.add(new State( "Islands Brygge"        , 660,450	,663,456  ,    "M1"));
+        Global.array_state.add(new State( "Kastrup"               , 850,550	,854,555  ,    "M2"));
+        Global.array_state.add(new State( "Kongens Nytorv"        , 600,320	,635,349  ,    "M1,M2,M3"));
+        Global.array_state.add(new State( "København H"           , 460,420	,469,440  ,    "M3,M4"));
+        Global.array_state.add(new State( "Københavns Lufthavn"   , 880,580	,883,585  ,    "M2"));
+        Global.array_state.add(new State( "Lergravsparken"        , 730,430	,736,438  ,    "M2"));
+        Global.array_state.add(new State( "Lindevang"             , 190,320	,200,338  ,    "M1,M2"));
+        Global.array_state.add(new State( "Marmorkirken"          , 630,270	,646,273  ,    "M3,M4"));
+        Global.array_state.add(new State( "Mozarts Plads (G)"     , 280,590	,290,596  ,    "M4"));
+        Global.array_state.add(new State( "Nordhavn"              , 730,90	,737,94   ,    "M4"));
+        Global.array_state.add(new State( "Nuuks Plads"           , 350,210	,359,219  ,    "M3"));
+        Global.array_state.add(new State( "Ny Ellebjerg (G)"      , 250,620	,261,626  ,    "M4"));
+        Global.array_state.add(new State( "Nørreport"             , 530,320	,537,339  ,    "M1,M2"));
+        Global.array_state.add(new State( "Nørrebros Rundddel"    , 380,170	,388,182  ,    "M3"));
+        Global.array_state.add(new State( "Nørrebro"              , 420,150	,426,154  ,    "M3"));
+        Global.array_state.add(new State( "Orientkaj"             , 760,60	,766,64   ,    "M4"));
+        Global.array_state.add(new State( "Poul Henningsens Plads", 560,150	,562,158  ,    "M3"));
+        Global.array_state.add(new State( "Rådhuspladsen"         , 510,420	,524,439  ,    "M3,M4"));
+        Global.array_state.add(new State( "Skjold Plads"          , 460,130	,471,141  ,    "M3"));
+        Global.array_state.add(new State( "Sluseholmen (G)"       , 310,560	,320,566  ,    "M3"));
+        Global.array_state.add(new State( "Sundby"                , 660,530	,663,540  ,    "M1"));
+        Global.array_state.add(new State( "Trianglen"             , 590,180	,599,188  ,    "M3"));
+        Global.array_state.add(new State( "Vanløse"               , 70,320	,79,339   ,    "M1,M2"));
+        Global.array_state.add(new State( "Vestamager"            , 660,660	,663,667  ,    "M1"));
+        Global.array_state.add(new State( "Vibenshus Runddel"     , 510,130	,519,142  ,    "M3"));
+        Global.array_state.add(new State( "Ørestad"               , 660,620	,662,624  ,    "M1"));
+        Global.array_state.add(new State( "Øresund"               , 760,460	,166,467  ,    "M2"));
+        Global.array_state.add(new State( "Østerport"             , 620,220	,633,225  ,    "M3,M4"));
+
+
+
     }
 
     @Override
