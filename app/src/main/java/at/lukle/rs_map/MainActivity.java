@@ -1,16 +1,17 @@
 package at.lukle.rs_map;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,9 +22,10 @@ import java.util.List;
 import at.lukle.clickableareasimage.ClickableArea;
 import at.lukle.clickableareasimage.ClickableAreasImage;
 import at.lukle.clickableareasimage.OnClickableAreaClickedListener;
+import at.lukle.rs_map.station_info.info_viewActivity;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class MainActivity extends AppCompatActivity implements OnClickableAreaClickedListener {
+public class MainActivity extends AppCompatActivity implements OnClickableAreaClickedListener,  View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
     PhotoViewAttacher photoViewAttacher;
@@ -56,6 +58,12 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         dialog = new Dialog(this);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         dialog.setContentView(R.layout.popup_dialog);
+        ImageView btn_food = (ImageView)dialog.findViewById(R.id.btn_food);
+        ImageView btn_tourist = (ImageView)dialog.findViewById(R.id.btn_tourist);
+        ImageView btn_route = (ImageView)dialog.findViewById(R.id.btn_route);
+        btn_food.setOnClickListener(this);
+        btn_tourist.setOnClickListener(this);
+        btn_route.setOnClickListener(this);
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -92,15 +100,16 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 //        getWindow().setGravity(Gravity.BOTTOM);
 //        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //        dialog.show();
-        Dialog dialog = new Dialog(this);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        dialog.setContentView(R.layout.popup_dialog);
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.BOTTOM;
-        lp.windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setAttributes(lp);
+
+//        Dialog dialog = new Dialog(this);
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        dialog.setContentView(R.layout.popup_dialog);
+//        lp.copyFrom(dialog.getWindow().getAttributes());
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        lp.gravity = Gravity.BOTTOM;
+//        lp.windowAnimations = R.style.DialogAnimation;
+//        dialog.getWindow().setAttributes(lp);
         dialog.show();
     }
 
@@ -181,5 +190,27 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent( MainActivity.this, info_viewActivity.class);
+
+        switch (v.getId()){
+            case R.id.btn_food:
+                intent.putExtra("TYPE","Food");
+                startActivity(intent);
+                break;
+            case R.id.btn_route:
+                intent = new Intent(MainActivity.this,mapViewActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_tourist:
+                intent.putExtra("TYPE","Tourist");
+                startActivity(intent);
+                break;
+        }
     }
 }
