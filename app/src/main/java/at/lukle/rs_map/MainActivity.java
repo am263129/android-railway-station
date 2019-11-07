@@ -234,7 +234,10 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 
         for (int i = 0; i < Global.array_state.size(); i ++){
-            clickableAreas.add(new ClickableArea(Global.array_state.get(i).getArea_X(), Global.array_state.get(i).getArea_Y(), 30, 30, Global.array_state.get(i)));
+            if(i == 12 || i == 18)
+                clickableAreas.add(new ClickableArea(Global.array_state.get(i).getArea_X()-15, Global.array_state.get(i).getArea_Y()-15, 70, 70, Global.array_state.get(i)));
+            else
+                clickableAreas.add(new ClickableArea(Global.array_state.get(i).getArea_X()-15, Global.array_state.get(i).getArea_Y()-15, 50, 50, Global.array_state.get(i)));
         }
         return clickableAreas;
     }
