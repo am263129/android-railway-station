@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     private SearchableSpinner mSearchableSpinner;
     private SimpleArrayListAdapter mSimpleArrayListAdapter;
     private ArrayList<String> mStrings =  new ArrayList<>();
+    int addintional_y = 298;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         init_data();
         init_arrayAdapter();
         map = (ImageView) findViewById(R.id.imageView);
-        map.setImageResource(R.drawable.high_resolution_map);
+        map.setImageResource(R.drawable.high_resolution_map_2);
         position = (ImageView)findViewById(R.id.img_position);
         mSearchableSpinner = (SearchableSpinner) findViewById(R.id.SearchableSpinner);
         mSimpleArrayListAdapter = new SimpleArrayListAdapter(this, mStrings);
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         List<ClickableArea> clickableAreas = getClickableAreas();
         clickableAreasImage.setClickableAreas(clickableAreas);
 
-        myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.high_resolution_map);
+        myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.high_resolution_map_2);
         tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
         tempCanvas = new Canvas(tempBitmap);
 
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
                 paint.setColor(Color.GREEN);
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(10);
-                tempCanvas.drawCircle(convertDpToPixel(((State) item).getCenter_X()+2,MainActivity.this), convertDpToPixel(((State) item).getCenter_Y() +2,MainActivity.this), radius, paint);
+                tempCanvas.drawCircle(convertDpToPixel(((State) item).getCenter_X()+2,MainActivity.this), convertDpToPixel(((State) item).getCenter_Y() +2 +addintional_y,MainActivity.this), radius, paint);
                 map.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
             }
         });
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 
 
-        photoViewAttacher.setScale(photoViewAttacher.getScale(),((State) item).getCenter_X(),((State) item).getCenter_Y(),false);
+        photoViewAttacher.setScale(photoViewAttacher.getScale(),((State) item).getCenter_X(),((State) item).getCenter_Y() + addintional_y,false);
         Log.e("Time","milestone4");
         dialog = new Dialog(this);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -239,9 +240,9 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
         for (int i = 0; i < Global.array_state.size(); i ++){
             if(i == 12 || i == 18)
-                clickableAreas.add(new ClickableArea(Global.array_state.get(i).getArea_X()-15, Global.array_state.get(i).getArea_Y()-15, 70, 70, Global.array_state.get(i)));
+                clickableAreas.add(new ClickableArea(Global.array_state.get(i).getArea_X()-15, Global.array_state.get(i).getArea_Y()-15 + addintional_y, 70, 70, Global.array_state.get(i)));
             else
-                clickableAreas.add(new ClickableArea(Global.array_state.get(i).getArea_X()-15, Global.array_state.get(i).getArea_Y()-15, 50, 50, Global.array_state.get(i)));
+                clickableAreas.add(new ClickableArea(Global.array_state.get(i).getArea_X()-15, Global.array_state.get(i).getArea_Y()-15 + addintional_y, 50, 50, Global.array_state.get(i)));
         }
         return clickableAreas;
     }
@@ -293,7 +294,6 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         Global.array_state.add(new State( "Øresund"               , 760,460	,166,467  ,   55.661347, 12.628824,  "M2"));
         Global.array_state.add(new State( "Østerport"             , 620,220	,633,225  ,   55.6932,   12.585403,  "M3,M4"));
 
-        String baseURL = "https://firebasestorage.googleapis.com/v0/b/railway-stations-3a406.appspot.com/o/";
         Global.array_info.add(new info("restaurant","Copenhagen Airport", "https://www.google.com.bd/images/srpr/logo11w.png","1,0", "Copenhagen Airport","Aksel Møllers Have"    ,55.628818, 12.64417));
         Global.array_info.add(new info("restaurant","Copenhagen Airport", "https://www.google.com.bd/images/srpr/logo11w.png","20,0", "Copenhagen Airport","Amagerbro"             ,55.628818, 12.64417));
         Global.array_info.add(new info("restaurant","Copenhagen Airport", "https://www.google.com.bd/images/srpr/logo11w.png","3,0", "Copenhagen Airport","Amager Strand"         ,55.628818, 12.64417));

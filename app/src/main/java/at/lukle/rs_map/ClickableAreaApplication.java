@@ -11,6 +11,5 @@ public class ClickableAreaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        LeakCanary.install(this);
     }
 }
