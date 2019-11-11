@@ -10,18 +10,22 @@ public class State {
     private Integer area_Y;
     private Integer center_X;
     private Integer center_Y;
+    private Double lat;
+    private Double lng;
     private String trainName;
 
     public State(){
 
     }
 
-    public State(String name,Integer area_x, Integer area_y, Integer center_x, Integer center_y, String trainname) {
+    public State(String name,Integer area_x, Integer area_y, Integer center_x, Integer center_y, Double lat, Double lng,String trainname) {
         this.Name = name;
         this.area_X = area_x;
         this.area_Y = area_y;
         this.center_X = center_x;
         this.center_Y = center_y;
+        this.lat = lat;
+        this.lng = lng;
         this.trainName = trainname;
     }
 
@@ -51,5 +55,13 @@ public class State {
 
     public String getTrainName() {
         return trainName;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public Double getLng() {
+        return lng;
     }
 }

@@ -2,6 +2,7 @@ package at.lukle.rs_map;
 
 import android.animation.ValueAnimator;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,6 +37,7 @@ import at.lukle.clickableareasimage.ClickableAreasImage;
 import at.lukle.clickableareasimage.OnClickableAreaClickedListener;
 import at.lukle.rs_map.searchspinner.SimpleArrayListAdapter;
 import at.lukle.rs_map.station_info.MapsActivity;
+import at.lukle.rs_map.station_info.info;
 import at.lukle.rs_map.station_info.info_viewActivity;
 import at.lukle.rs_map.util.Global;
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
@@ -50,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     Bitmap tempBitmap;
     Canvas tempCanvas;
     Dialog dialog;
-    String selected_station;
-
+    State selected_station;
+    public static MainActivity mself;
     private SearchableSpinner mSearchableSpinner;
     private SimpleArrayListAdapter mSimpleArrayListAdapter;
     private ArrayList<String> mStrings =  new ArrayList<>();
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mself = this;
         init_data();
         init_arrayAdapter();
         map = (ImageView) findViewById(R.id.imageView);
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     public void onClickableAreaTouched(Object item) {
         if (item instanceof State) {
 //            Log.e("Time","milestone1");
-            selected_station = ((State) item).getName();
+            selected_station = ((State) item);
 //            Toast.makeText(this, selected_station, Toast.LENGTH_SHORT).show();
 
 //            Log.e("Time","milestone2");
@@ -148,8 +152,8 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
                 paint = new Paint();
                 paint.setColor(Color.GREEN);
                 paint.setStyle(Paint.Style.STROKE);
-                paint.setStrokeWidth(5);
-                tempCanvas.drawCircle(convertDpToPixel(((State) item).getCenter_X(),MainActivity.this), convertDpToPixel(((State) item).getCenter_Y(),MainActivity.this), radius, paint);
+                paint.setStrokeWidth(10);
+                tempCanvas.drawCircle(convertDpToPixel(((State) item).getCenter_X()+2,MainActivity.this), convertDpToPixel(((State) item).getCenter_Y() +2,MainActivity.this), radius, paint);
                 map.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
             }
         });
@@ -244,51 +248,192 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
     private void init_data() {
         Global.array_state.clear();
-        Global.array_state.add(new State( "Aksel Møllers Have"    , 340,260   ,345,265  ,    "M3"));
-        Global.array_state.add(new State( "Amagerbro"             , 700,400	,707,409  ,    "M2"));
-        Global.array_state.add(new State( "Amager Strand"         , 790,490	,795,497  ,    "M2"));
-        Global.array_state.add(new State( "Bella Center"          , 660,570	,663,582  ,    "M1"));
-        Global.array_state.add(new State( "Christianshavn"        , 670,370	,670,383  ,    "M1,M2"));
-        Global.array_state.add(new State( "DR Byen"               , 660,490	,663,498  ,    "M1"));
-        Global.array_state.add(new State( "Enghave Plads"         , 410,410	,420,416  ,    "M3"));
-        Global.array_state.add(new State( "Enghave Brygge (G)"    , 340,530	,350,536  ,    "M4"));
-        Global.array_state.add(new State( "Fasanvej"              , 250,320	,261,339  ,    "M1,M2"));
-        Global.array_state.add(new State( "Flintholm"             , 130,320	,140,339  ,    "M1,M2"));
-        Global.array_state.add(new State( "Femøren"               , 820,520	,824,526  ,    "M2"));
-        Global.array_state.add(new State( "Forum"                 , 440,320	,448,339  ,    "M1,M2"));
-        Global.array_state.add(new State( "Frederiksberg"         , 330,320	,353,339  ,    "M1,M2,M3"));
-        Global.array_state.add(new State( "Frederiksberg Allé"    , 370,380	,379,383  ,    "M3"));
-        Global.array_state.add(new State( "Gammel Strand"         , 560,400	,575,417  ,    "M3,M4"));
-        Global.array_state.add(new State( "Havneholmen (G)"       , 370,500	,381,506  ,    "M4"));
-        Global.array_state.add(new State( "Islands Brygge"        , 660,450	,663,456  ,    "M1"));
-        Global.array_state.add(new State( "Kastrup"               , 850,550	,854,555  ,    "M2"));
-        Global.array_state.add(new State( "Kongens Nytorv"        , 600,320	,635,349  ,    "M1,M2,M3"));
-        Global.array_state.add(new State( "København H"           , 460,420	,469,440  ,    "M3,M4"));
-        Global.array_state.add(new State( "Københavns Lufthavn"   , 880,580	,883,585  ,    "M2"));
-        Global.array_state.add(new State( "Lergravsparken"        , 730,430	,736,438  ,    "M2"));
-        Global.array_state.add(new State( "Lindevang"             , 190,320	,200,338  ,    "M1,M2"));
-        Global.array_state.add(new State( "Marmorkirken"          , 630,270	,646,273  ,    "M3,M4"));
-        Global.array_state.add(new State( "Mozarts Plads (G)"     , 280,590	,290,596  ,    "M4"));
-        Global.array_state.add(new State( "Nordhavn"              , 730,90	,737,94   ,    "M4"));
-        Global.array_state.add(new State( "Nuuks Plads"           , 350,210	,359,219  ,    "M3"));
-        Global.array_state.add(new State( "Ny Ellebjerg (G)"      , 250,620	,261,626  ,    "M4"));
-        Global.array_state.add(new State( "Nørreport"             , 530,320	,537,339  ,    "M1,M2"));
-        Global.array_state.add(new State( "Nørrebros Rundddel"    , 380,170	,388,182  ,    "M3"));
-        Global.array_state.add(new State( "Nørrebro"              , 420,150	,426,154  ,    "M3"));
-        Global.array_state.add(new State( "Orientkaj"             , 760,60	,766,64   ,    "M4"));
-        Global.array_state.add(new State( "Poul Henningsens Plads", 560,150	,562,158  ,    "M3"));
-        Global.array_state.add(new State( "Rådhuspladsen"         , 510,420	,524,439  ,    "M3,M4"));
-        Global.array_state.add(new State( "Skjold Plads"          , 460,130	,471,141  ,    "M3"));
-        Global.array_state.add(new State( "Sluseholmen (G)"       , 310,560	,320,566  ,    "M3"));
-        Global.array_state.add(new State( "Sundby"                , 660,530	,663,540  ,    "M1"));
-        Global.array_state.add(new State( "Trianglen"             , 590,180	,599,188  ,    "M3"));
-        Global.array_state.add(new State( "Vanløse"               , 70,320	,79,339   ,    "M1,M2"));
-        Global.array_state.add(new State( "Vestamager"            , 660,660	,663,667  ,    "M1"));
-        Global.array_state.add(new State( "Vibenshus Runddel"     , 510,130	,519,142  ,    "M3"));
-        Global.array_state.add(new State( "Ørestad"               , 660,620	,662,624  ,    "M1"));
-        Global.array_state.add(new State( "Øresund"               , 760,460	,166,467  ,    "M2"));
-        Global.array_state.add(new State( "Østerport"             , 620,220	,633,225  ,    "M3,M4"));
+        Global.array_state.add(new State( "Aksel Møllers Have"    , 340,260   ,345,265  , 55.686376, 12.533187,    "M3"));
+        Global.array_state.add(new State( "Amagerbro"             , 700,400	,707,409  ,   55.663542, 12.602702,  "M2"));
+        Global.array_state.add(new State( "Amager Strand"         , 790,490	,795,497  ,   55.65612,  12.631895,  "M2"));
+        Global.array_state.add(new State( "Bella Center"          , 660,570	,663,582  ,   55.638067, 12.582899,  "M1"));
+        Global.array_state.add(new State( "Christianshavn"        , 670,370	,670,383  ,   55.672098, 12.591663,  "M1,M2"));
+        Global.array_state.add(new State( "DR Byen"               , 660,490	,663,498  ,   55.655848, 12.589044,  "M1"));
+        Global.array_state.add(new State( "Enghave Plads"         , 410,410	,420,416  ,   55.667265, 12.545814,  "M3"));
+        Global.array_state.add(new State( "Enghave Brygge (G)"    , 340,530	,350,536  ,   55.654212, 12.557069,  "M4"));
+        Global.array_state.add(new State( "Fasanvej"              , 250,320	,261,339  ,   55.681675, 12.5231,    "M1,M2"));
+        Global.array_state.add(new State( "Flintholm"             , 130,320	,140,339  ,   55.685642, 12.499116,  "M1,M2"));
+        Global.array_state.add(new State( "Femøren"               , 820,520	,824,526  ,   55.645223, 12.638361,  "M2"));
+        Global.array_state.add(new State( "Forum"                 , 440,320	,448,339  ,   55.681825, 12.552412,  "M1,M2"));
+        Global.array_state.add(new State( "Frederiksberg"         , 330,320	,353,339  ,   55.681216, 12.531711,  "M1,M2,M3"));
+        Global.array_state.add(new State( "Frederiksberg Allé"    , 370,380	,379,383  ,   55.673697, 12.540408,  "M3"));
+        Global.array_state.add(new State( "Gammel Strand"         , 560,400	,575,417  ,   55.677765, 12.57959,   "M3,M4"));
+        Global.array_state.add(new State( "Havneholmen (G)"       , 370,500	,381,506  ,   55.661299, 12.558911,  "M4"));
+        Global.array_state.add(new State( "Islands Brygge"        , 660,450	,663,456  ,   55.663423, 12.585136,  "M1"));
+        Global.array_state.add(new State( "Kastrup"               , 850,550	,854,555  ,   55.635673, 12.647003,  "M2"));
+        Global.array_state.add(new State( "Kongens Nytorv"        , 600,320	,634,348  ,   55.679434, 12.585232,  "M1,M2,M3"));
+        Global.array_state.add(new State( "København H"           , 460,420	,469,440  ,   55.671929, 12.564114,  "M3,M4"));
+        Global.array_state.add(new State( "Københavns Lufthavn"   , 880,580	,883,585  ,   55.62957,  12.649375,  "M2"));
+        Global.array_state.add(new State( "Lergravsparken"        , 730,430	,736,438  ,   55.662233, 12.616295,  "M2"));
+        Global.array_state.add(new State( "Lindevang"             , 190,320	,200,338  ,   55.683482, 12.51312,   "M1,M2"));
+        Global.array_state.add(new State( "Marmorkirken"          , 630,270	,646,273  ,   55.685242, 12.588634,  "M3,M4"));
+        Global.array_state.add(new State( "Mozarts Plads (G)"     , 280,590	,290,596  ,   55.648892, 12.534109,  "M4"));
+        Global.array_state.add(new State( "Nordhavn"              , 730,90	,737,94   ,   55.705255, 12.590928,  "M4"));
+        Global.array_state.add(new State( "Nuuks Plads"           , 350,210	,359,219  ,   55.688773, 12.542854,  "M3"));
+        Global.array_state.add(new State( "Ny Ellebjerg (G)"      , 250,620	,261,626  ,   55.652933, 12.516034,  "M4"));
+        Global.array_state.add(new State( "Nørreport"             , 530,320	,537,339  ,   55.683685, 12.571571,  "M1,M2"));
+        Global.array_state.add(new State( "Nørrebros Rundddel"    , 380,170	,388,182  ,   55.694034, 12.548916,  "M3"));
+        Global.array_state.add(new State( "Nørrebro"              , 420,150	,426,154  ,   55.70071,  12.537855,  "M3"));
+        Global.array_state.add(new State( "Orientkaj"             , 760,60	,766,64   ,   55.711799, 12.595137,  "M4"));
+        Global.array_state.add(new State( "Poul Henningsens Plads", 560,150	,562,158  ,   55.709263, 12.57665,   "M3"));
+        Global.array_state.add(new State( "Rådhuspladsen"         , 510,420	,524,439  ,   55.676464, 12.568818,  "M3,M4"));
+        Global.array_state.add(new State( "Skjold Plads"          , 460,130	,471,141  ,   55.703278, 55.703278,  "M3"));
+        Global.array_state.add(new State( "Sluseholmen (G)"       , 310,560	,320,566  ,   55.645548, 12.544731 , "M3"));
+        Global.array_state.add(new State( "Sundby"                , 660,530	,663,540  ,   55.645212, 12.585742,  "M1"));
+        Global.array_state.add(new State( "Trianglen"             , 590,180	,599,188  ,   55.699252, 12.576081,  "M3"));
+        Global.array_state.add(new State( "Vanløse"               , 70,320	,79,339   ,   55.687348, 12.491533,  "M1,M2"));
+        Global.array_state.add(new State( "Vestamager"            , 660,660	,663,667  ,   55.619366, 12.575491,  "M1"));
+        Global.array_state.add(new State( "Vibenshus Runddel"     , 510,130	,519,142  ,   55.70638,  12.563979,  "M3"));
+        Global.array_state.add(new State( "Ørestad"               , 660,620	,662,624  ,   55.628978, 12.579393,  "M1"));
+        Global.array_state.add(new State( "Øresund"               , 760,460	,166,467  ,   55.661347, 12.628824,  "M2"));
+        Global.array_state.add(new State( "Østerport"             , 620,220	,633,225  ,   55.6932,   12.585403,  "M3,M4"));
 
+        String baseURL = "https://firebasestorage.googleapis.com/v0/b/railway-stations-3a406.appspot.com/o/";
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "1,0", "Copenhagen Airport","Aksel Møllers Have"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_3.png?alt=media&token=201cdf72-e6b2-4340-b695-1dc977bf43b7",  "20,0", "Copenhagen Airport","Amagerbro"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "3,0", "Copenhagen Airport","Amager Strand"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "4,0", "Copenhagen Airport","Bella Center"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "5,0", "Copenhagen Airport","Christianshavn"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "6,0", "Copenhagen Airport","DR Byen"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_3.png?alt=media&token=201cdf72-e6b2-4340-b695-1dc977bf43b7",  "7,0", "Copenhagen Airport","Enghave Plads"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "8,0", "Copenhagen Airport","Enghave Brygge (G)"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "9,0", "Copenhagen Airport","Fasanvej"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "10,0", "Copenhagen Airport","Flintholm"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "20,0", "Copenhagen Airport","Femøren"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "30,0", "Copenhagen Airport","Forum"                 ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "40,0", "Copenhagen Airport","Frederiksberg"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "50,0", "Copenhagen Airport","Frederiksberg Allé"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "1,0", "Copenhagen Airport","Gammel Strand"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "123,0", "Copenhagen Airport","Havneholmen (G)"       ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "12,0", "Copenhagen Airport","Islands Brygge"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "2,0", "Copenhagen Airport","Kastrup"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "34,0", "Copenhagen Airport","Kongens Nytorv"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "12,0", "Copenhagen Airport","København H"           ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "34,0", "Copenhagen Airport","Københavns Lufthavn"   ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "5,0", "Copenhagen Airport","Lergravsparken"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "44,0", "Copenhagen Airport","Lindevang"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "56,0", "Copenhagen Airport","Marmorkirken"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "23,0", "Copenhagen Airport","Mozarts Plads (G)"     ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "234,0", "Copenhagen Airport","Nordhavn"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "11,0", "Copenhagen Airport","Aksel Møllers Have"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "3,0", "Copenhagen Airport","Amagerbro"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "5,0", "Copenhagen Airport","Amager Strand"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_3.png?alt=media&token=201cdf72-e6b2-4340-b695-1dc977bf43b7",  "67,0", "Copenhagen Airport","Bella Center"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_3.png?alt=media&token=201cdf72-e6b2-4340-b695-1dc977bf43b7",  "44,0", "Copenhagen Airport","Christianshavn"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "23,0", "Copenhagen Airport","DR Byen"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_3.png?alt=media&token=201cdf72-e6b2-4340-b695-1dc977bf43b7",  "3,0", "Copenhagen Airport","Enghave Plads"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "12,0", "Copenhagen Airport","Enghave Brygge (G)"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "23,0", "Copenhagen Airport","Fasanvej"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "11,0", "Copenhagen Airport","Flintholm"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "12,0", "Copenhagen Airport","Femøren"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "15,0", "Copenhagen Airport","Forum"                 ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "34,0", "Copenhagen Airport","Frederiksberg"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "25,0", "Copenhagen Airport","Frederiksberg Allé"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "34,0", "Copenhagen Airport","Gammel Strand"      ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_3.png?alt=media&token=201cdf72-e6b2-4340-b695-1dc977bf43b7",  "33,0", "Copenhagen Airport","Havneholmen (G)"       ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "345,0", "Copenhagen Airport","Islands Brygge"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "1,0", "Copenhagen Airport","Kastrup"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "20,0", "Copenhagen Airport","Kongens Nytorv"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_4.png?alt=media&token=24525295-a455-4388-8baa-4a07b4fd25fd",  "30,0", "Copenhagen Airport","København H"           ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_3.png?alt=media&token=201cdf72-e6b2-4340-b695-1dc977bf43b7",  "40,0", "Copenhagen Airport","Københavns Lufthavn"   ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "50,0", "Copenhagen Airport","Lergravsparken"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_2.png?alt=media&token=bef905ba-bb17-4ebd-b6eb-72618ebf37e9",  "60,0", "Copenhagen Airport","Lindevang"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "70,0", "Copenhagen Airport","Marmorkirken"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food_5.png?alt=media&token=e9325098-2775-47aa-b3f9-3c8696727729",  "80,0", "Copenhagen Airport","Mozarts Plads (G)"     ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Nordhavn"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Nuuks Plads"           ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Ny Ellebjerg (G)"      ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Nørreport"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Nørrebros Rundddel"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Nørrebro"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Orientkaj"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Poul Henningsens Plads",55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Rådhuspladsen"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Skjold Plads"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Sluseholmen (G)"       ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Sundby"                ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Trianglen"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Vanløse"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Vestamager"            ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Vibenshus Runddel"     ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Ørestad"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Øresund"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("restaurant","Copenhagen Airport", baseURL +"item_food.png?alt=media&token=e685a2ff-20e6-4e93-89d7-1c22279ed45c",    "90,0", "Copenhagen Airport","Østerport"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "10,0", "Copenhagen Airport","Aksel Møllers Have"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "20,0", "Copenhagen Airport","Amagerbro"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "3,0", "Copenhagen Airport","Amager Strand"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_4.png?alt=media&token=7d099f55-c530-4684-af4c-a92b7da0c576",  "40,0", "Copenhagen Airport","Bella Center"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "50,0", "Copenhagen Airport","Christianshavn"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "60,0", "Copenhagen Airport","DR Byen"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "87,0", "Copenhagen Airport","Enghave Plads"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_3.png?alt=media&token=d92c6e78-1cfd-4408-9671-3a437ed0ff3c",  "60,0", "Copenhagen Airport","Enghave Brygge (G)"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_4.png?alt=media&token=7d099f55-c530-4684-af4c-a92b7da0c576",  "70,0", "Copenhagen Airport","Fasanvej"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "50,0", "Copenhagen Airport","Flintholm"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "30,0", "Copenhagen Airport","Femøren"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "20,0", "Copenhagen Airport","Forum"                 ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_4.png?alt=media&token=7d099f55-c530-4684-af4c-a92b7da0c576",  "30,0", "Copenhagen Airport","Frederiksberg"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "4,0", "Copenhagen Airport","Frederiksberg Allé"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "50,0", "Copenhagen Airport","Gammel Strand"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "10,0", "Copenhagen Airport","Havneholmen (G)"       ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "30,0", "Copenhagen Airport","Islands Brygge"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "40,0", "Copenhagen Airport","Kastrup"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "50,0", "Copenhagen Airport","Kongens Nytorv"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "60,0", "Copenhagen Airport","København H"           ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "70,0", "Copenhagen Airport","Københavns Lufthavn"   ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "20,0", "Copenhagen Airport","Lergravsparken"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "30,0", "Copenhagen Airport","Lindevang"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "40,0", "Copenhagen Airport","Marmorkirken"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "50,0", "Copenhagen Airport","Mozarts Plads (G)"     ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "60,0", "Copenhagen Airport","Nordhavn"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "70,0", "Copenhagen Airport","Aksel Møllers Have"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "20,0", "Copenhagen Airport","Amagerbro"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "3,0", "Copenhagen Airport","Amager Strand"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_3.png?alt=media&token=d92c6e78-1cfd-4408-9671-3a437ed0ff3c",  "20,0", "Copenhagen Airport","Bella Center"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_3.png?alt=media&token=d92c6e78-1cfd-4408-9671-3a437ed0ff3c",  "30,0", "Copenhagen Airport","Christianshavn"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_4.png?alt=media&token=7d099f55-c530-4684-af4c-a92b7da0c576",  "10,0", "Copenhagen Airport","DR Byen"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_3.png?alt=media&token=d92c6e78-1cfd-4408-9671-3a437ed0ff3c",  "40,0", "Copenhagen Airport","Enghave Plads"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_4.png?alt=media&token=7d099f55-c530-4684-af4c-a92b7da0c576",  "50,0", "Copenhagen Airport","Enghave Brygge (G)"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "60,0", "Copenhagen Airport","Fasanvej"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "220,0", "Copenhagen Airport","Flintholm"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "20,0", "Copenhagen Airport","Femøren"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "10,0", "Copenhagen Airport","Forum"                 ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_4.png?alt=media&token=7d099f55-c530-4684-af4c-a92b7da0c576",  "10,0", "Copenhagen Airport","Frederiksberg"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "20,0", "Copenhagen Airport","Frederiksberg Allé"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "30,0", "Copenhagen Airport","Gammel Strand"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "40,0", "Copenhagen Airport","Havneholmen (G)"       ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "50,0", "Copenhagen Airport","Islands Brygge"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "60,0", "Copenhagen Airport","Kastrup"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_4.png?alt=media&token=7d099f55-c530-4684-af4c-a92b7da0c576",  "10,0", "Copenhagen Airport","Kongens Nytorv"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_4.png?alt=media&token=7d099f55-c530-4684-af4c-a92b7da0c576",  "20,0", "Copenhagen Airport","København H"           ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_3.png?alt=media&token=d92c6e78-1cfd-4408-9671-3a437ed0ff3c",  "30,0", "Copenhagen Airport","Københavns Lufthavn"   ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "40,0", "Copenhagen Airport","Lergravsparken"        ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "50,0", "Copenhagen Airport","Lindevang"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_5.png?alt=media&token=09d65870-18ee-402c-ba33-727994497443",  "10,0", "Copenhagen Airport","Marmorkirken"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist_2.png?alt=media&token=f76600d2-819a-4157-ae47-2168992f3cf7",  "20,0", "Copenhagen Airport","Mozarts Plads (G)"     ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "30,0", "Copenhagen Airport","Nordhavn"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Nuuks Plads"           ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Ny Ellebjerg (G)"      ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Nørreport"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Nørrebros Rundddel"    ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Nørrebro"              ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Orientkaj"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Poul Henningsens Plads",55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Rådhuspladsen"         ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Skjold Plads"          ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Sluseholmen (G)"       ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Sundby"                ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Trianglen"             ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Vanløse"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Vestamager"            ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Vibenshus Runddel"     ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Ørestad"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Øresund"               ,55.628818, 12.64417));
+        Global.array_info.add(new info("tourist","Hall of Glory", baseURL +"item_tourist.png?alt=media&token=01a36dae-1511-4c1a-88e7-b36b0d0b7e52",    "90,0", "Copenhagen Airport","Østerport"             ,55.628818, 12.64417));
     }
     private void init_arrayAdapter() {
         for(int i = 0; i < Global.array_state.size(); i ++){
@@ -333,19 +478,30 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         switch (v.getId()){
             case R.id.btn_food:
                 intent.putExtra("TYPE","Food");
-                intent.putExtra("NAME",selected_station);
+                intent.putExtra("NAME",selected_station.getName());
                 startActivity(intent);
                 break;
             case R.id.btn_route:
-                intent = new Intent(MainActivity.this, MapsActivity.class);
+
+                String uri = "geo:" + String.valueOf(selected_station.getLat()) + "," + String.valueOf(selected_station.getLng()) + "?q="
+                        + String.valueOf(selected_station.getLat())
+                        + "," + String.valueOf(selected_station.getLng()) + "(" + selected_station.getName()+")";
+                    Uri.parse(uri);
+                 intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(uri));
+                intent.setComponent(new ComponentName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity"));
                 startActivity(intent);
                 break;
             case R.id.btn_tourist:
                 intent.putExtra("TYPE","Tourist");
-                intent.putExtra("NAME",selected_station);
+                intent.putExtra("NAME",selected_station.getName());
                 startActivity(intent);
                 break;
         }
+    }
+
+    public static MainActivity getInstance(){
+        return  mself;
     }
 
 }
