@@ -9,8 +9,7 @@
     <ImageView
         android:id="@+id/info_pic"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:srcCompat="@drawable/item_food" />
+        android:layout_height="100dp" />
 
     <TextView
         android:id="@+id/info_name"

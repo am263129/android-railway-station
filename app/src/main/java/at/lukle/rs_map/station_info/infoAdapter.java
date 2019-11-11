@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,10 +74,9 @@ public class infoAdapter extends ArrayAdapter<info> {
         String index = array_info.get(position).getInfo_pic();
 
 
+        String urlOfImage = array_info.get(position).getInfo_pic();
 
-//        new DownloadImageTask(info_pic,default_image, position).execute(array_info.get(position).getInfo_pic());
-//        Picasso.get().load("https://www.sendspace.com/file/ds8m19").into(info_pic);
-        Glide.with(context).load("https://www.sendspace.com/file/ds8m19").into(info_pic);
+        new ImageDownloadTask(info_pic).execute(urlOfImage);
         desctiption.setText(array_info.get(position).getInfo_description());
         info_description.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,5 +99,41 @@ public class infoAdapter extends ArrayAdapter<info> {
         });
 
         return v;
+    }
+
+
+    private class ImageDownloadTask extends AsyncTask<String, Void, Bitmap>{
+
+        //Initialize an ImageView Class/widget
+        ImageView imageView;
+
+        public ImageDownloadTask(ImageView iv){
+            //Specify the initialized ImageView is same as the method calling ImageView
+            this.imageView=iv;
+        }
+
+        //Background task to download image as bitmap
+        protected Bitmap doInBackground(String... urls){
+            String urlToDisplay = urls[0];
+            Bitmap bmp = null;
+            try{
+                //Try to download the image from web as stream
+                InputStream inputStream = new java.net.URL(urlToDisplay).openStream();
+                //decodeStream(InputStream is) method decode an input stream into a bitmap.
+                bmp = BitmapFactory.decodeStream(inputStream);
+
+            }catch(Exception e){
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+
+        //do something with the result
+        protected void onPostExecute(Bitmap result)
+        {
+            //Specify ImageView image source from downloaded image
+            imageView.setImageBitmap(result);
+        }
     }
 }
