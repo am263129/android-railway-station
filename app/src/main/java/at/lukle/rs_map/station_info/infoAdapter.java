@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
@@ -76,7 +78,19 @@ public class infoAdapter extends ArrayAdapter<info> {
 
         String urlOfImage = array_info.get(position).getInfo_pic();
 
-        new ImageDownloadTask(info_pic).execute(urlOfImage);
+        String image_name = array_info.get(position).getInfo_pic().substring(0,array_info.get(position).getInfo_pic().length()-4);
+        String package_name = context.getPackageName();
+        int id = context.getResources().getIdentifier("drawable/"+image_name, null, context.getPackageName());
+//        int resId = parent.getResources().getIdentifier(image_name, "drawable", package_name);
+//        info_pic.setImageResource(R.drawable.);
+//        new ImageDownloadTask(info_pic).execute(urlOfImage);
+        info_pic.setVisibility(View.GONE);
+        try {
+            info_pic.setImageResource(id);
+            info_pic.setVisibility(View.VISIBLE);
+        }catch (Exception e){
+            Log.e("Wanning"," No image file");
+        }
         desctiption.setText(array_info.get(position).getInfo_description());
         info_description.setOnClickListener(new View.OnClickListener() {
             @Override
