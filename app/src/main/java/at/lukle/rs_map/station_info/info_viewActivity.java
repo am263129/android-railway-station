@@ -39,7 +39,7 @@ public class info_viewActivity extends AppCompatActivity implements View.OnClick
         TextView station_name = (TextView)findViewById(R.id.station_name);
         list_info = (ListView)findViewById(R.id.list_info);
         btn_food.setOnClickListener(this);
-        btn_tourist.setOnClickListener(this);
+//        btn_tourist.setOnClickListener(this);
         Intent intent = getIntent();
         String selected = intent.getStringExtra("NAME");
         station_name.setText(selected);
