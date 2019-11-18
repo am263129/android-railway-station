@@ -84,13 +84,14 @@ public class infoAdapter extends ArrayAdapter<info> {
 //        int resId = parent.getResources().getIdentifier(image_name, "drawable", package_name);
 //        info_pic.setImageResource(R.drawable.);
 //        new ImageDownloadTask(info_pic).execute(urlOfImage);
-        info_pic.setVisibility(View.GONE);
         try {
             info_pic.setImageResource(id);
-            info_pic.setVisibility(View.VISIBLE);
         }catch (Exception e){
             Log.e("Wanning"," No image file");
         }
+        if (array_info.get(position).getInfo_description().equals(""))
+            desctiption.setVisibility(View.GONE);
+
         desctiption.setText(array_info.get(position).getInfo_description());
         info_description.setOnClickListener(new View.OnClickListener() {
             @Override

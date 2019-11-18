@@ -22,6 +22,7 @@
                 android:id="@+id/train_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="10dp">
 

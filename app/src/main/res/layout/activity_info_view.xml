@@ -12,8 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:background="@drawable/border"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="50dp">
+
+        <TextView
+            android:id="@+id/station_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="TextView"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,16 +88,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/station_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="TextView"
-        android:textColor="@android:color/tertiary_text_light"
-        android:textSize="24sp"
-        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/list_info"

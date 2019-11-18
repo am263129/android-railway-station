@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RisTen Restaurant"
-        android:textColor="@color/common_google_signin_btn_text_light_focused"
-        android:textSize="24sp" />
+        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="km" />
+                android:text=" km" />
         </LinearLayout>
 
         <TextView
@@ -60,7 +60,8 @@
             android:layout_weight="1"
             android:gravity="right"
             android:text="Description"
-            android:textColor="@android:color/holo_blue_dark" />
+            android:textColor="@android:color/holo_blue_dark"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -69,10 +70,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:padding="10dp"
         android:text="TextView"
-        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+        android:textColor="@color/common_google_signin_btn_text_light_focused"
         android:textSize="18sp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </LinearLayout>
