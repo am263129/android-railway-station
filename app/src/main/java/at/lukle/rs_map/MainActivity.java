@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     Canvas tempCanvas;
     Dialog dialog;
     State selected_station;
+    boolean special = false;
     public static MainActivity mself;
     private SearchableSpinner mSearchableSpinner;
     private SimpleArrayListAdapter mSimpleArrayListAdapter;
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         ImageView time_1_1_blue = (ImageView)dialog.findViewById(R.id.time_1_1_blue);
         ImageView time_1_1_yellow = (ImageView)dialog.findViewById(R.id.time_1_1_yellow);
         ImageView time_1_2 = (ImageView)dialog.findViewById(R.id.time_1_2);
+        ImageView time_2_2 = (ImageView)dialog.findViewById(R.id.time_2_2);
         ImageView time_1_2_blue = (ImageView)dialog.findViewById(R.id.time_1_2_blue);
         ImageView time_2_1 = (ImageView)dialog.findViewById(R.id.time_2_1);
         TextView time_1_1_time = (TextView)dialog.findViewById(R.id.time_1_1_text);
@@ -194,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         TextView time_1_2_time = (TextView)dialog.findViewById(R.id.time_1_2_text);
         TextView time_1_2_label = (TextView)dialog.findViewById(R.id.label_1_2);
         TextView time_2_1_time = (TextView)dialog.findViewById(R.id.time_2_1_text);
+        TextView time_2_2_time = (TextView)dialog.findViewById(R.id.time_2_2_text);
+        TextView time_2_2_label = (TextView)dialog.findViewById(R.id.label_2_2);
 
         Log.e("today",getToday());
         String day_of_week = getToday().split(" ")[0];
@@ -369,10 +373,16 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
                     }
                 }
                 break;
+            case "M1,M2,M3,M4":
+                time_2_2.setVisibility(View.VISIBLE);
+                special = true;
             case "M1,M2,M3":
                 train_2.setVisibility(View.VISIBLE);
                 train_name_1.setImageResource(R.drawable.m1_m2);
-                train_name_2.setImageResource(R.drawable.m3);
+                if (special)
+                    train_name_2.setImageResource(R.drawable.m3_m4);
+                else
+                    train_name_2.setImageResource(R.drawable.m3);
                 time_1_2.setVisibility(View.VISIBLE);
 
                 if((day_of_week.equals("Fri")||day_of_week.equals("Sat") )) {
@@ -411,6 +421,9 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
                 }
 
                 break;
+
+
+
 
         }
         Log.e("Time","milestone5");
@@ -452,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         Global.array_state.add(new State( "Havneholmen (G)"       , 339,532, 339,532,   55.661299, 12.558911,  "M4"));
         Global.array_state.add(new State( "Islands Brygge"        , 665,458, 665,458,   55.663423, 12.585136,  "M1"));
         Global.array_state.add(new State( "Kastrup"               , 856,585, 856,585,   55.635673, 12.647003,  "M2"));
-        Global.array_state.add(new State( "Kongens Nytorv"        , 615,355, 615,355,   55.679434, 12.585232,  "M1,M2,M3"));
+        Global.array_state.add(new State( "Kongens Nytorv"        , 615,355, 615,355,   55.679434, 12.585232,  "M1,M2,M3,M4"));
         Global.array_state.add(new State( "København H"           , 459,468, 459,468,   55.671929, 12.564114,  "M3,M4"));
         Global.array_state.add(new State( "Københavns Lufthavn"   , 888,616, 888,616,    55.62957,  12.649375,  "M2"));
         Global.array_state.add(new State( "Lergravsparken"        , 732,459, 732,459,   55.662233, 12.616295,  "M2"));
