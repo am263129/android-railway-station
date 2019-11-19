@@ -34,26 +34,157 @@
                     app:srcCompat="@drawable/m1_m2" />
 
                 <ImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/direction"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     app:srcCompat="@drawable/ic_bothdirection" />
 
-                <ImageView
-                    android:id="@+id/time_1_1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    app:srcCompat="@drawable/m1_3min" />
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
 
-                <ImageView
-                    android:id="@+id/time_1_2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:visibility="invisible"
-                    app:srcCompat="@drawable/m2_3min" />
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/time_1_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:scaleType="fitCenter"
+                        android:src="@color/green"
+                        app:riv_corner_radius="50dp"
+                        app:riv_mutate_background="false"
+                        app:riv_oval="false" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/time_1_1_red"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:scaleType="fitCenter"
+                        android:src="@color/red"
+                        android:visibility="gone"
+                        app:riv_corner_radius="50dp"
+                        app:riv_mutate_background="false"
+                        app:riv_oval="false" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/time_1_1_yellow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:scaleType="fitCenter"
+                        android:src="@color/yellow"
+                        android:visibility="gone"
+                        app:riv_corner_radius="50dp"
+                        app:riv_mutate_background="false"
+                        app:riv_oval="false" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/time_1_1_blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:scaleType="fitCenter"
+                        android:src="@color/blue"
+                        android:visibility="gone"
+                        app:riv_corner_radius="50dp"
+                        app:riv_mutate_background="false"
+                        app:riv_oval="false" />
+
+                    <TextView
+                        android:id="@+id/time_1_1_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="3"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/label_1_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="-1dp"
+                        android:layout_marginTop="27dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="min."
+                        android:textColor="@android:color/white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/train_1_2"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/time_1_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:scaleType="fitCenter"
+                        android:src="@color/yellow"
+                        app:riv_corner_radius="50dp"
+                        app:riv_mutate_background="false"
+                        app:riv_oval="false" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/time_1_2_blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:scaleType="fitCenter"
+                        android:src="@color/blue"
+                        android:visibility="gone"
+                        app:riv_corner_radius="50dp"
+                        app:riv_mutate_background="false"
+                        app:riv_oval="false" />
+
+
+                    <TextView
+                        android:id="@+id/time_1_2_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="3"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/label_1_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="-1dp"
+                        android:layout_marginTop="27dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="min."
+                        android:textColor="@android:color/white" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -71,31 +202,112 @@
                     android:layout_weight="4"
                     app:srcCompat="@drawable/m3" />
 
+
                 <ImageView
-                    android:id="@+id/imageView15"
+                    android:id="@+id/direction_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     app:srcCompat="@drawable/ic_bothdirection" />
 
-                <ImageView
-                    android:id="@+id/time_2_1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    app:srcCompat="@drawable/m3_4min" />
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
 
-                <ImageView
-                    android:id="@+id/imageView17"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2" />
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/time_2_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:scaleType="fitCenter"
+                        android:src="@color/red"
+                        app:riv_corner_radius="50dp"
+                        app:riv_mutate_background="false"
+                        app:riv_oval="false" />
+
+                    <TextView
+                        android:id="@+id/time_2_1_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="3"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/label_2_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="-1dp"
+                        android:layout_marginTop="27dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="min."
+                        android:textColor="@android:color/white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:visibility="visible">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:scaleType="fitCenter"
+                        android:src="@color/blue"
+                        android:visibility="invisible"
+                        app:riv_corner_radius="50dp"
+                        app:riv_mutate_background="false"
+                        app:riv_oval="false" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="3"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="-1dp"
+                        android:layout_marginTop="27dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="min."
+                        android:textColor="@android:color/white" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <TextView
                     android:id="@+id/textView9"
@@ -103,31 +315,40 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="Tubes" />
+                    android:text="Tubes"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="Directions" />
+                    android:text="Directions"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="Every" />
+                    android:text="Every"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="Every" />
+                    android:text="Every"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 

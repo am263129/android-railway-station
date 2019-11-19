@@ -4,7 +4,11 @@
     <color name="colorPrimaryDark">#8B3F51B5</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="austriaRed">#ff0000</color>
+    <color name="austriaRed">#FF0000</color>
     <color name="colorText_a">#C11D00</color>
     <color name="transparent">#8AFFFFFF</color>
+    <color name="green">#48ab4c</color>
+    <color name="yellow">#fdc431</color>
+    <color name="blue">#1dade4</color>
+    <color name="red">#d02530</color>
 </resources>

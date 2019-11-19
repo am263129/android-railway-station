@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -22,11 +23,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import at.lukle.clickableareasimage.ClickableArea;
@@ -72,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         photoViewAttacher = new PhotoViewAttacher(map);
         photoViewAttacher.setMinimumScale(1.3f);
         photoViewAttacher.setMaximumScale(3.0f);
-        photoViewAttacher.setScale(2.0f, 592.9f, 405.9f, true);
+        photoViewAttacher.setScale(2.0f, 480.9f, 405.9f, true);
 
         ClickableAreasImage clickableAreasImage = new ClickableAreasImage(photoViewAttacher, this);
         List<ClickableArea> clickableAreas = getClickableAreas();
@@ -174,46 +180,236 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         LinearLayout train_2 = (LinearLayout)dialog.findViewById(R.id.train_2);
         ImageView train_name_1 = (ImageView)dialog.findViewById(R.id.tr_name_1);
         ImageView train_name_2 = (ImageView)dialog.findViewById(R.id.tr_name_2);
+        RelativeLayout train_1_2 = (RelativeLayout)dialog.findViewById(R.id.train_1_2);
+        ImageView direction = (ImageView)dialog.findViewById(R.id.direction);
         ImageView time_1_1 = (ImageView)dialog.findViewById(R.id.time_1_1);
+        ImageView time_1_1_red = (ImageView)dialog.findViewById(R.id.time_1_1_red);
+        ImageView time_1_1_blue = (ImageView)dialog.findViewById(R.id.time_1_1_blue);
+        ImageView time_1_1_yellow = (ImageView)dialog.findViewById(R.id.time_1_1_yellow);
         ImageView time_1_2 = (ImageView)dialog.findViewById(R.id.time_1_2);
+        ImageView time_1_2_blue = (ImageView)dialog.findViewById(R.id.time_1_2_blue);
         ImageView time_2_1 = (ImageView)dialog.findViewById(R.id.time_2_1);
+        TextView time_1_1_time = (TextView)dialog.findViewById(R.id.time_1_1_text);
+        TextView time_1_1_label = (TextView)dialog.findViewById(R.id.label_1_1);
+        TextView time_1_2_time = (TextView)dialog.findViewById(R.id.time_1_2_text);
+        TextView time_1_2_label = (TextView)dialog.findViewById(R.id.label_1_2);
+        TextView time_2_1_time = (TextView)dialog.findViewById(R.id.time_2_1_text);
+
+        Log.e("today",getToday());
+        String day_of_week = getToday().split(" ")[0];
+        String current_time = getToday().split(" ")[3];
+        Log.e(day_of_week,current_time);
         switch (item.getTrainName()){
             case "M1":
+                train_1_2.setVisibility(View.INVISIBLE);
                 train_name_1.setImageResource(R.drawable.m1);
-                time_1_1.setImageResource(R.drawable.m1_6min);
+                if((day_of_week.equals("Fri")||day_of_week.equals("Sat") )) {
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 1
+                            && Integer.parseInt(current_time.split(":")[0]) <= 7) {
+                        time_1_1_time.setText("15");
+                    }
+                }
+                else{
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 0
+                            && Integer.parseInt(current_time.split(":")[0]) <= 5){
+                        time_1_1_time.setText("20");
+                    }
+                    else {
+
+                        if ((Integer.parseInt(current_time.split(":")[0]) >= 7
+                                && Integer.parseInt(current_time.split(":")[0]) <= 9)
+                                || (Integer.parseInt(current_time.split(":")[0]) >= 14
+                                && Integer.parseInt(current_time.split(":")[0]) <= 18)
+                                && (!day_of_week.equals("Sun"))) {
+                            time_1_1_time.setText("4");
+                        } else {
+                            time_1_1_time.setText("6");
+                        }
+                    }
+
+
+                }
                 break;
             case "M2":
                 train_name_1.setImageResource(R.drawable.m2);
-                time_1_1.setImageResource(R.drawable.m2_6min);
+                train_1_2.setVisibility(View.INVISIBLE);
+                time_1_1_yellow.setVisibility(View.VISIBLE);
+                if((day_of_week.equals("Fri")||day_of_week.equals("Sat") )) {
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 1
+                            && Integer.parseInt(current_time.split(":")[0]) <= 7) {
+                        time_1_1_time.setText("15");
+                    }
+                }
+                else{
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 0
+                            && Integer.parseInt(current_time.split(":")[0]) <= 5){
+                        time_1_1_time.setText("20");
+                    }
+                    else {
+
+                        if ((Integer.parseInt(current_time.split(":")[0]) >= 7
+                                && Integer.parseInt(current_time.split(":")[0]) <= 9)
+                                || (Integer.parseInt(current_time.split(":")[0]) >= 14
+                                && Integer.parseInt(current_time.split(":")[0]) <= 18)
+                                && (!day_of_week.equals("Sun"))) {
+                            time_1_1_time.setText("4");
+                        } else {
+                            time_1_1_time.setText("6");
+                        }
+
+                    }
+                }
                 break;
             case "M3":
+                train_1_2.setVisibility(View.INVISIBLE);
                 train_name_1.setImageResource(R.drawable.m3);
-                time_1_1.setImageResource(R.drawable.m3_4min);
+                time_1_1_red.setVisibility(View.VISIBLE);
+                if((day_of_week.equals("Fri")||day_of_week.equals("Sat") )) {
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 1
+                            && Integer.parseInt(current_time.split(":")[0]) <= 7) {
+                        time_1_1_time.setText("12");
+                    }
+                }
+                else{
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 0
+                            && Integer.parseInt(current_time.split(":")[0]) <= 5){
+                        time_1_1_time.setText("6");
+                        direction.setImageResource(R.drawable.ic_onearrow);
+                    }
+                    else {
+
+                        if ((Integer.parseInt(current_time.split(":")[0]) >= 7
+                                && Integer.parseInt(current_time.split(":")[0]) <= 9)
+                                || (Integer.parseInt(current_time.split(":")[0]) >= 14
+                                && Integer.parseInt(current_time.split(":")[0]) <= 18)
+                                && (!day_of_week.equals("Sun"))) {
+                            time_1_1_time.setText("3");
+                        } else {
+                            time_1_1_time.setText("4-5");
+                        }
+                    }
+                }
+
                 break;
             case "M4":
+                train_1_2.setVisibility(View.INVISIBLE);
                 train_name_1.setImageResource(R.drawable.m4);
-                time_1_1.setImageResource(R.drawable.m4_2min);
+                time_1_1.setVisibility(View.GONE);
+                time_1_1_blue.setVisibility(View.VISIBLE);
+                time_1_1_time.setText("Open");
+                time_1_1_label.setText("2020");
                 break;
             case "M1,M2":
-                train_name_1.setImageResource(R.drawable.m1_m2);
-                time_1_1.setImageResource(R.drawable.m1_3min);
-                time_1_2.setVisibility(View.VISIBLE);
-                time_1_2.setImageResource(R.drawable.m2_3min);
+
+                if((day_of_week.equals("Fri")||day_of_week.equals("Sat") )) {
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 1
+                            && Integer.parseInt(current_time.split(":")[0]) <= 7) {
+                        time_1_1_time.setText("7-8");
+                        time_1_2_time.setText("7-8");
+                    }
+                }
+                else{
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 0
+                            && Integer.parseInt(current_time.split(":")[0]) <= 5){
+                        time_1_1_time.setText("20");
+                        time_1_2_time.setText("20");
+                    }
+                    else {
+                        if ((Integer.parseInt(current_time.split(":")[0]) >= 7
+                                && Integer.parseInt(current_time.split(":")[0]) <= 9)
+                                || (Integer.parseInt(current_time.split(":")[0]) >= 14
+                                && Integer.parseInt(current_time.split(":")[0]) <= 18)
+                                && (!day_of_week.equals("Sun"))) {
+                            time_1_1_time.setText("2");
+                            time_1_2_time.setText("2");
+                        } else {
+                            time_1_1_time.setText("3");
+                            time_1_2_time.setText("3");
+                        }
+                    }
+                }
                 break;
             case "M3,M4":
                 train_name_1.setImageResource(R.drawable.m3_m4);
-                time_1_2.setVisibility(View.VISIBLE);
-                time_1_1.setImageResource(R.drawable.m3_4min);
-                time_1_2.setImageResource(R.drawable.m4_2min);
+                time_1_2.setVisibility(View.GONE);
+                time_1_2_blue.setVisibility(View.VISIBLE);
+                time_1_1.setVisibility(View.GONE);
+                time_1_1_red.setVisibility(View.VISIBLE);
+                if((day_of_week.equals("Fri")||day_of_week.equals("Sat") )) {
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 1
+                            && Integer.parseInt(current_time.split(":")[0]) <= 7) {
+                        time_1_1_time.setText("12");
+                        time_1_2_time.setText("Open");
+                        time_1_2_label.setText("2020");
+                    }
+                }
+                else{
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 0
+                            && Integer.parseInt(current_time.split(":")[0]) <= 5){
+                        time_1_1_time.setText("6");
+                        time_1_2_time.setText("Open");
+                        direction.setImageResource(R.drawable.ic_onearrow);
+                        time_1_2_label.setText("2020");
+                    }
+                    else {
+
+                        if ((Integer.parseInt(current_time.split(":")[0]) >= 7
+                                && Integer.parseInt(current_time.split(":")[0]) <= 9)
+                                || (Integer.parseInt(current_time.split(":")[0]) >= 14
+                                && Integer.parseInt(current_time.split(":")[0]) <= 18)
+                                && (!day_of_week.equals("Sun"))) {
+                            time_1_1_time.setText("3");
+                            time_1_2_time.setText("Open");
+                            time_1_2_label.setText("2020");
+                        } else {
+                            time_1_1_time.setText("4-5");
+                            time_1_2_time.setText("Open");
+                            time_1_2_label.setText("2020");
+                        }
+                    }
+                }
                 break;
             case "M1,M2,M3":
                 train_2.setVisibility(View.VISIBLE);
                 train_name_1.setImageResource(R.drawable.m1_m2);
                 train_name_2.setImageResource(R.drawable.m3);
                 time_1_2.setVisibility(View.VISIBLE);
-                time_1_1.setImageResource(R.drawable.m1_3min);
-                time_1_2.setImageResource(R.drawable.m2_3min);
-                time_2_1.setImageResource(R.drawable.m3_4min);
+
+                if((day_of_week.equals("Fri")||day_of_week.equals("Sat") )) {
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 1
+                            && Integer.parseInt(current_time.split(":")[0]) <= 7) {
+                        time_1_1_time.setText("7-8");
+                        time_1_2_time.setText("7-8");
+                        time_2_1_time.setText("12");
+
+                    }
+                }
+                else{
+                    if (Integer.parseInt(current_time.split(":")[0]) >= 0
+                            && Integer.parseInt(current_time.split(":")[0]) <= 5){
+                        time_1_1_time.setText("20");
+                        time_1_2_time.setText("20");
+                        time_2_1_time.setText("6");
+                        direction.setImageResource(R.drawable.ic_onearrow);
+                    }
+                    else {
+
+                        if ((Integer.parseInt(current_time.split(":")[0]) >= 7
+                                && Integer.parseInt(current_time.split(":")[0]) <= 9)
+                                || (Integer.parseInt(current_time.split(":")[0]) >= 14
+                                && Integer.parseInt(current_time.split(":")[0]) <= 18)
+                                && (!day_of_week.equals("Sun"))) {
+                            time_1_1_time.setText("2");
+                            time_1_2_time.setText("2");
+                            time_2_1_time.setText("3");
+                        } else {
+                            time_1_1_time.setText("3");
+                            time_1_2_time.setText("3");
+                            time_2_1_time.setText("4-5");
+                        }
+                    }
+                }
+
                 break;
 
         }
@@ -765,6 +961,14 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
     public static MainActivity getInstance(){
         return  mself;
+    }
+
+    public static String getToday(){
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
+        String str = sdf.format(currentTime);
+        String sub_id = String.valueOf(currentTime.getHours())+String.valueOf(currentTime.getMinutes());
+        return currentTime.toString();
     }
 
 }
