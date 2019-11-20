@@ -4,5 +4,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">#FF9800</item>
+		<item name="colorPrimary">#607D8B</item>
+		<item name="colorAccent">#FF4081</item>
     </style>
 </resources>

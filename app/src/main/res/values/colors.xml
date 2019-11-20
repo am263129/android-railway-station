@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#8B3F51B5</color>
-    <color name="colorPrimaryDark">#8B3F51B5</color>
-    <color name="colorAccent">#FF4081</color>
-
+    <color name="colorPrimary">#479FFD</color>
+    <color name="colorPrimaryDark">#1D69FC</color>
+    <color name="colorAccent">#47F5EF</color>
     <color name="austriaRed">#FF0000</color>
     <color name="colorText_a">#C11D00</color>
-    <color name="transparent">#8AFFFFFF</color>
+    <color name="transparent">#8AFFFF</color>
     <color name="green">#48ab4c</color>
     <color name="yellow">#fdc431</color>
     <color name="blue">#1dade4</color>
