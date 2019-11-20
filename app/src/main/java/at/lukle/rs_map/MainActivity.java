@@ -482,7 +482,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         Global.array_state.add(new State( "Poul Henningsens Plads", 544,154, 544,154,    55.709263, 12.57665,   "M3"));
         Global.array_state.add(new State( "Rådhuspladsen"         , 524,450, 524,450,    55.676464, 12.568818,  "M3,M4"));
         Global.array_state.add(new State( "Skjold Plads"          , 442,131, 442,131,    55.703278, 55.703278,  "M3"));
-        Global.array_state.add(new State( "Sluseholmen (G)"       , 276,594, 276,594,    55.645548, 12.544731 , "M3"));
+        Global.array_state.add(new State( "Sluseholmen (G)"       , 276,594, 276,594,    55.645548, 12.544731 , "M4"));
         Global.array_state.add(new State( "Sundby"                , 664,552, 664,552,    55.645212, 12.585742,  "M1"));
         Global.array_state.add(new State( "Trianglen"             , 584,191, 584,191,    55.699252, 12.576081,  "M3"));
         Global.array_state.add(new State( "Vanløse"               , 102,158, 102,158,    55.687348, 12.491533,  "M1,M2"));
